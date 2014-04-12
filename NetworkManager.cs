@@ -22,6 +22,8 @@ public class NetworkManager : MonoBehaviour
 	public GameObject Player1;
 	public GameObject Player2;
 
+	private bool gameStarted = false;
+
 	private void StartServer()
 	{
 		Network.InitializeServer(4, 25000, !Network.HavePublicAddress());
@@ -81,6 +83,7 @@ public class NetworkManager : MonoBehaviour
 
 	private void SpawnPlayer1()
 	{
+		gameStarted = true;
 		Network.Instantiate(Player1, new Vector3(0f, 5f, 0f), Quaternion.identity, 0);
 		if (_playerPos == PlayerPosition.Player1)
 		{
@@ -90,6 +93,7 @@ public class NetworkManager : MonoBehaviour
 
 	private void SpawnPlayer2()
 	{
+		gameStarted = true;
 		Network.Instantiate(Player2, new Vector3(0f, 5f, 0f), Quaternion.identity, 0);
 		if (_playerPos == PlayerPosition.Player2)
 		{
@@ -106,22 +110,21 @@ public class NetworkManager : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
-			if (GameObject.FindGameObjectWithTag ("Player1").transform.position.x > GameObject.FindGameObjectWithTag ("finishLine").transform.position.x) 
-			{
-				if (_playerPos == PlayerPosition.Player1) {
-						Application.LoadLevel (1);
-				} else {
-					Application.LoadLevel(2);
-				}
+		if (gameStarted) 
+		{
+			if (GameObject.FindGameObjectWithTag ("Player1").transform.position.x > GameObject.FindGameObjectWithTag ("finishLine").transform.position.x) {
+					if (_playerPos == PlayerPosition.Player1) {
+							Application.LoadLevel (1);
+					} else {
+							Application.LoadLevel (2);
+					}
 			}
-			if (GameObject.FindGameObjectWithTag ("Player2").transform.position.x > GameObject.FindGameObjectWithTag ("finishLine").transform.position.x) 
-			{
-				if (_playerPos == PlayerPosition.Player2) {
-						Application.LoadLevel (1);
-				} else {
-					Application.LoadLevel(2);
-				}
-				gameStarted = false;
+			if (GameObject.FindGameObjectWithTag ("Player2").transform.position.x > GameObject.FindGameObjectWithTag ("finishLine").transform.position.x) {
+					if (_playerPos == PlayerPosition.Player2) {
+							Application.LoadLevel (1);
+					} else {
+							Application.LoadLevel (2);
+					}
 			}
 		}
 	}

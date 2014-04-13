@@ -25,16 +25,13 @@ public class Player1Controls : MonoBehaviour
 	private int lastCheckPointReached;
 	
 	// edit these to tune character movement	
-	private float runVel = 2.5f; 	// run speed when not carrying the ball
-	private float walkVel = 2f; 	// walk speed while carrying ball
+	private float walkVel = 2f; 	// walk speed
 	private float jumpVel = 4f; 	// jump velocity
 	private float jump2Vel = 2f; 	// double jump velocity
 	private float fallVel = 1f;		// fall velocity, gravity
-	private float passVel = 3f;		// horizontal velocity of ball when passed
-	
+
 	private float moveVel;
-	private float pVel = 0f;
-	
+
 	private int jumps = 0;
 	private int maxJumps = 2; 		// set to 2 for double jump
 	

@@ -1,3 +1,4 @@
+using UnityEngine;
 using System.Collections;
 
 public class Player2Controls : MonoBehaviour
@@ -24,21 +25,16 @@ public class Player2Controls : MonoBehaviour
 	private int lastCheckPointReached;
 	
 	// edit these to tune character movement	
-	private float runVel = 2.5f; 	// run speed when not carrying the ball
-	private float walkVel = 2f; 	// walk speed while carrying ball
+	private float walkVel = 2f; 	// walk speed
 	private float jumpVel = 4f; 	// jump velocity
 	private float jump2Vel = 2f; 	// double jump velocity
 	private float fallVel = 1f;		// fall velocity, gravity
-	private float passVel = 3f;		// horizontal velocity of ball when passed
-	
+
 	private float moveVel;
-	private float pVel = 0f;
-	
+
 	private int jumps = 0;
 	private int maxJumps = 2; 		// set to 2 for double jump
-	
-	//protected string team = "";
-	
+
 	// raycast stuff
 	private RaycastHit2D hit;
 	private Vector2 physVel = new Vector2();
@@ -59,8 +55,7 @@ public class Player2Controls : MonoBehaviour
 			GetComponent<Rigidbody2D>().gravityScale = 0;
 		} 
 	}
-	//spluct
-	
+
 	// Update is called once per frame
 	public void Update () 
 	{
@@ -100,7 +95,7 @@ public class Player2Controls : MonoBehaviour
 	// Update is called once per frame
 	private void checkIfFallen() 
 	{
-		// teleport me to the other side of the screen when I reach the edge
+		// teleport me to a checkpoint
 		if(_transform.position.y < -3f)
 		{
 			respawnMe();
@@ -111,8 +106,6 @@ public class Player2Controls : MonoBehaviour
 	
 	private void UpdatePhysics()
 	{
-		//if(xa.gameOver == true || alive == false) return;
-		
 		physVel = Vector2.zero;
 		
 		// move left
@@ -191,34 +184,29 @@ public class Player2Controls : MonoBehaviour
 	{
 		Vector3 newSyncPosition = Vector3.zero;
 		Vector3 newFacingVector = Vector3.zero;
-		//facing newFacingDir = facing.Right;
 		int newAnimState = 0;
 		
 		if (stream.isWriting)
 		{
 			newFacingVector = _transform.localScale;
 			newSyncPosition = _transform.position;
-			//newFacingDir = facingDir;
-			
+
 			newAnimState = this.GetComponent<Animator>().GetInteger(Animator.StringToHash ("P2AnimState"));
 			
 			Debug.Log(newAnimState);
 			
 			stream.Serialize(ref newSyncPosition);
 			stream.Serialize(ref newFacingVector);
-			//stream.Serialize(ref newFacingDir);
 			stream.Serialize(ref newAnimState);
 		}
 		else
 		{
 			stream.Serialize(ref newSyncPosition);
 			stream.Serialize(ref newFacingVector);
-			//stream.Serialize(ref newFacingDir);
 			stream.Serialize(ref newAnimState);
 			
 			_transform.localScale = newFacingVector;
 			_transform.position = newSyncPosition;
-			//facingDir = newFacingDir;
 			this.GetComponent<Animator>().SetInteger(Animator.StringToHash ("P2AnimState"), newAnimState);
 		}
 	}

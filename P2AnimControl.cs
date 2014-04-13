@@ -38,9 +38,6 @@ public class P2AnimControl : MonoBehaviour
 	{
 		if (networkView.isMine) 
 		{
-			// if the game is over, don't bother updating any animations
-			//if(xa.gameOver == true) return;
-
 			// run left
 			if (character.currentInputState == Player2Controls.inputState.WalkLeft && character.grounded == true && currentAnim != anim.WalkLeft) {
 					currentAnim = anim.WalkLeft;

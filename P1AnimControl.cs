@@ -75,7 +75,7 @@ public class P1AnimControl : MonoBehaviour
 					currentAnim = anim.FallRight;
 					_animator.SetInteger (_animState, 2);
 					_transform.localScale = new Vector3 (1, 1, 1);
-			}
+			} 
 		}
 	}
 }

@@ -34,9 +34,7 @@ public class Player1Controls : MonoBehaviour
 
 	private int jumps = 0;
 	private int maxJumps = 2; 		// set to 2 for double jump
-	
-	//protected string team = "";
-	
+
 	// raycast stuff
 	private RaycastHit2D hit;
 	private Vector2 physVel = new Vector2();
@@ -57,8 +55,7 @@ public class Player1Controls : MonoBehaviour
 			GetComponent<Rigidbody2D>().gravityScale = 0;
 		} 
 	}
-	//spluct
-	
+
 	// Update is called once per frame
 	public void Update () 
 	{
@@ -98,7 +95,7 @@ public class Player1Controls : MonoBehaviour
 	// Update is called once per frame
 	private void checkIfFallen() 
 	{
-		// teleport me to the other side of the screen when I reach the edge
+		// teleport me to a checkpoint
 		if(_transform.position.y < -3f)
 		{
 			respawnMe();
@@ -109,8 +106,6 @@ public class Player1Controls : MonoBehaviour
 	
 	private void UpdatePhysics()
 	{
-		//if(xa.gameOver == true || alive == false) return;
-		
 		physVel = Vector2.zero;
 		
 		// move left
@@ -173,11 +168,7 @@ public class Player1Controls : MonoBehaviour
 
 	public void manageCheckPoints()
 	{
-		if (_transform.position.x > GameObject.FindGameObjectWithTag("finishLine").transform.position.x)
-		{
-			//call function to end game
-		}
-		else if (_transform.position.x > GameObject.FindGameObjectWithTag("checkpoint1").transform.position.x &&
+		if (_transform.position.x > GameObject.FindGameObjectWithTag("checkpoint1").transform.position.x &&
 		    _transform.position.x < GameObject.FindGameObjectWithTag("checkpoint2").transform.position.x)
 		{
 			lastCheckPointReached = 1;

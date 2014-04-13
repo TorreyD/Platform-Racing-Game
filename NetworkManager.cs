@@ -9,11 +9,9 @@ public class NetworkManager : MonoBehaviour
 		Player2,
 		None
 	}
-	
-	
+
 	public static PlayerPosition _playerPos;
-
-
+	
 	private const string typeName = "RunForIt";
 	private const string gameName = "Room1";
 
@@ -65,8 +63,10 @@ public class NetworkManager : MonoBehaviour
 	
 	void OnMasterServerEvent(MasterServerEvent msEvent)
 	{
-		if (msEvent == MasterServerEvent.HostListReceived)
-			hostList = MasterServer.PollHostList();
+		if (msEvent == MasterServerEvent.HostListReceived) 
+		{
+			hostList = MasterServer.PollHostList ();
+		}
 	}
 
 	private void JoinServer(HostData hostData)
@@ -85,26 +85,18 @@ public class NetworkManager : MonoBehaviour
 	{
 		gameStarted = true;
 		Network.Instantiate(Player1, new Vector3(0f, 5f, 0f), Quaternion.identity, 0);
-		if (_playerPos == PlayerPosition.Player1)
-		{
-			//CamMovement._target = Player1;
-		}
 	}
 
 	private void SpawnPlayer2()
 	{
 		gameStarted = true;
 		Network.Instantiate(Player2, new Vector3(0f, 5f, 0f), Quaternion.identity, 0);
-		if (_playerPos == PlayerPosition.Player2)
-		{
-			CamMovement._target = Player2;
-		}
 	}
 
 	// Use this for initialization
 	void Start () 
 	{
-		MasterServer.ipAddress = "127.0.0.1";
+		MasterServer.ipAddress = "127.0.0.1"; //couldn't connect to the default master server, so local IP is used instead
 	}
 	
 	// Update is called once per frame
@@ -113,18 +105,20 @@ public class NetworkManager : MonoBehaviour
 		if (gameStarted) 
 		{
 			if (GameObject.FindGameObjectWithTag ("Player1").transform.position.x > GameObject.FindGameObjectWithTag ("finishLine").transform.position.x) {
-					if (_playerPos == PlayerPosition.Player1) {
-							Application.LoadLevel (1);
-					} else {
-							Application.LoadLevel (2);
-					}
+				if (_playerPos == PlayerPosition.Player1) {
+						Application.LoadLevel (1);
+				} else {
+						Application.LoadLevel (2);
+				}
+				gameStarted = false;
 			}
 			if (GameObject.FindGameObjectWithTag ("Player2").transform.position.x > GameObject.FindGameObjectWithTag ("finishLine").transform.position.x) {
-					if (_playerPos == PlayerPosition.Player2) {
-							Application.LoadLevel (1);
-					} else {
-							Application.LoadLevel (2);
-					}
+				if (_playerPos == PlayerPosition.Player2) {
+						Application.LoadLevel (1);
+				} else {
+						Application.LoadLevel (2);
+				}
+				gameStarted = false;
 			}
 		}
 	}
